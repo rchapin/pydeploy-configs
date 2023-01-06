@@ -1,0 +1,115 @@
+install-cert:
+  ca_cert_dir: /usr/local/share/ca-certificates
+  ca_certs_bundle_path: /etc/ssl/certs/ca-certificates.crt
+
+install-chrome:
+  repo_file_template: deb [arch=${architecture}] http://dl.google.com/linux/chrome/deb/ stable main
+  repo_file_name: google-chrome.list
+  key_url: https://dl.google.com/linux/linux_signing_key.pub
+  key_file_name: google-chrome.gpg
+  package: google-chrome-stable
+
+install-docker:
+  repo_file_template: deb [arch=${architecture}] https://download.docker.com/linux/debian ${release} stable
+  repo_file_name: docker.list
+  key_url: https://download.docker.com/linux/debian/gpg
+  key_file_name: docker.gpg
+  packages: [docker-ce, docker-ce-cli, containerd.io]
+
+install-google-cloud-cli:
+  repo_file_template: deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+  repo_file_name: google-cloud-sdk.list
+  key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  key_file_name: cloud.google.gpg
+  package: google-cloud-cli
+
+install-java-adoptium-eclipse-temurin:
+  repo_file_template: deb https://packages.adoptium.net/artifactory/deb ${release} main
+  repo_file_name: adoptium.list
+  key_url: https://packages.adoptium.net/artifactory/api/gpg/key/public
+  key_file_name: adoptium.gpg
+  packages:
+    - temurin-${version}-jdk
+
+install-java-openjdk:
+  packages:
+    - openjdk-${version}-doc
+    - openjdk-${version}-jdk
+    - openjdk-${version}-source
+
+install-minikube:
+  packages:
+    - bridge-utils
+    - qemu-kvm
+    - kubernetes-client
+    - libvirt-daemon
+    - libvirt-daemon-system
+    - virtinst
+  base_url: https://storage.googleapis.com/minikube/releases/latest
+  minikube:
+    binary_template: minikube-linux-${architecture}
+    sha256sum_template: minikube-linux-${architecture}.sha256
+    local_file_name: minikube
+  kvm2_driver:
+    binary_template: docker-machine-driver-kvm2-${architecture}
+    sha256sum_template: docker-machine-driver-kvm2-${architecture}.sha256
+    local_file_name: docker-machine-driver-kvm2
+
+install-packages:
+  packages:
+    - apt-transport-https
+    - ca-certificates
+    - debsig-verify
+    - bind9-dnsutils
+    - bridge-utils
+    - flameshot
+    - gimp
+    - git-gui
+    - gitk
+    - gnupg
+    - jq
+    - netcat
+    - net-tools
+    - okular
+    - rsync
+    - terminator
+    - tree
+    - yadm
+    - zip
+
+install-redshift:
+  packages:
+    - redshift
+    - geoclue-2.0
+  location_provider: geoclue2
+
+
+install-slack:
+  download_url_prefix: https://downloads.slack-edge.com/releases/linux/4.29.149/prod/x64
+  package: slack-desktop-4.29.149-amd64.deb
+  verification:
+    public_key_url: https://slack.com/gpg/slack_pubkey_20220708.gpg
+    public_key_filename: slack_pubkey_20220708.gpg
+    debsig_keyring_dir: /usr/share/debsig/keyrings/D1EAC4827EB66C16
+    debsig_policy_dir: /etc/debsig/policies/D1EAC4827EB66C16
+    # debsig_keyring_filename: slack_debsig.gpg
+    debsig_policy_filename: slack.pol
+    debsig_policy_contents: |
+      <?xml version="1.0"?>
+      <!DOCTYPE Policy SYSTEM "https://www.debian.org/debsig/1.0/policy.dtd">
+      <Policy xmlns="https://www.debian.org/debsig/1.0/">
+      <Origin Name="Slack" id="D1EAC4827EB66C16" Description="Slack"/>
+      <Selection>
+      <Required Type="origin" File="debsig.gpg" id="D1EAC4827EB66C16"/>
+      </Selection>
+      <Verification>
+      <Required Type="origin" File="debsig.gpg" id="D1EAC4827EB66C16"/>
+      </Verification>
+      </Policy>
+
+install-vscode:
+  repo_file_template: deb [arch=${architecture} signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main
+  repo_file_name: vscode.list
+  key_url: https://packages.microsoft.com/keys/microsoft.asc
+  key_file_name: packages.microsoft.gpg
+  package: code
