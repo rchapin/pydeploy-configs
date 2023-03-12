@@ -77,6 +77,14 @@ install-packages:
     - yadm
     - zip
 
+install-pgadmin:
+  repo_file_template: deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/${release} pgadmin4 main
+  repo_file_name: pgadmin4.list
+  key_url: https://www.pgadmin.org/static/packages_pgadmin_org.pub
+  key_file_name: packages_pgadmin_org.gpg
+  packages:
+    - pgadmin4
+
 install-redshift:
   packages:
     - redshift
