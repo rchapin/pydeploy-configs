@@ -16,6 +16,11 @@ install-docker:
   key_file_name: docker.gpg
   packages: [docker-ce, docker-ce-cli, containerd.io]
 
+install-drawio:
+  github_release_url: https://api.github.com/repos/jgraph/drawio-desktop/releases/latest
+  artifact_regex: "drawio-amd64-.*.deb"
+  hashes_regex: "Files-SHA256-Hashes.txt"
+
 install-google-cloud-cli:
   repo_file_template: deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
   repo_file_name: google-cloud-sdk.list
