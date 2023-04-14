@@ -97,15 +97,18 @@ install-redshift:
   location_provider: geoclue2
 
 
+# Both this and the zoom set of configs is for the installation of a package that is
+# individually signed, as opposed to a package that is installed from a repo with a
+# public key
 install-slack:
   download_url_prefix: https://downloads.slack-edge.com/releases/linux/4.29.149/prod/x64
   package: slack-desktop-4.29.149-amd64.deb
   verification:
+    mode: debsigs
     public_key_url: https://slack.com/gpg/slack_pubkey_20220708.gpg
     public_key_filename: slack_pubkey_20220708.gpg
     debsig_keyring_dir: /usr/share/debsig/keyrings/D1EAC4827EB66C16
     debsig_policy_dir: /etc/debsig/policies/D1EAC4827EB66C16
-    # debsig_keyring_filename: slack_debsig.gpg
     debsig_policy_filename: slack.pol
     debsig_policy_contents: |
       <?xml version="1.0"?>
@@ -126,3 +129,11 @@ install-vscode:
   key_url: https://packages.microsoft.com/keys/microsoft.asc
   key_file_name: packages.microsoft.gpg
   package: code
+
+install-zoom:
+  download_url_prefix: https://zoom.us/client/5.14.2.2046
+  package: zoom_amd64.deb
+  verification:
+    mode: dpkg-sig
+    public_key_url: https://zoom.us/linux/download/pubkey?version=5-12-6
+    public_key_filename: zoom-signing-key.pub
