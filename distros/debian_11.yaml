@@ -97,7 +97,6 @@ install-redshift:
     - geoclue-2.0
   location_provider: geoclue2
 
-
 # Both this and the zoom set of configs is for the installation of a package that is
 # individually signed, as opposed to a package that is installed from a repo with a
 # public key
@@ -123,6 +122,17 @@ install-slack:
       <Required Type="origin" File="debsig.gpg" id="D1EAC4827EB66C16"/>
       </Verification>
       </Policy>
+
+install-virtualbox:
+  repo_file_template: deb [arch=${architecture} signed-by=/etc/apt/trusted.gpg.d/oracle_vbox_2016.gpg] http://download.virtualbox.org/virtualbox/debian bullseye contrib
+  repo_file_name: virtuallbox.list
+  key_url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+  key_file_name: oracle_vbox_2016.gpg
+  package: virtualbox-6.1
+  version: 6.1.44
+  revision: 156814
+  extension_pack_url_template: https://download.virtualbox.org/virtualbox/${version_short}/Oracle_VM_VirtualBox_Extension_Pack-${version_full}.vbox-extpack
+  extension_pack_shasums_url_template: https://download.virtualbox.org/virtualbox/${version_short}/SHA256SUMS
 
 install-vscode:
   repo_file_template: deb [arch=${architecture} signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main
