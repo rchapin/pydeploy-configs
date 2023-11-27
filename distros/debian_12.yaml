@@ -1,0 +1,62 @@
+base: debian_base.yaml
+
+install-packages:
+  packages:
+    - apt-transport-https
+    - ca-certificates
+    - debsig-verify
+    - bind9-dnsutils
+    - bridge-utils
+    - flameshot
+    - gimp
+    - git-gui
+    - gitk
+    - gnupg
+    - jq
+    - netcat-traditional
+    - net-tools
+    - okular
+    - rsync
+    - terminator
+    - tilix
+    - tree
+    - unzip
+    - yadm
+    - zip
+
+# Both this and the zoom set of configs is for the installation of a package that is
+# individually signed, as opposed to a package that is installed from a repo with a
+# public key
+install-slack:
+  download_url_prefix: https://downloads.slack-edge.com/releases/linux/4.35.126/prod/x64
+  package: slack-desktop-4.35.126-amd64.deb
+  verification:
+    allow_weak_digest_algos: true
+    mode: debsigs
+    public_key_url: https://slack.com/gpg/slack_pubkey_20230710.gpg
+    public_key_filename: slack_pubkey_20230710.gpg
+    debsig_keyring_dir: /usr/share/debsig/keyrings/262281B2DDE0F7A1
+    debsig_policy_dir: /etc/debsig/policies/262281B2DDE0F7A1
+    debsig_policy_filename: slack.pol
+    debsig_policy_contents: |
+      <?xml version="1.0"?>
+      <!DOCTYPE Policy SYSTEM "https://www.debian.org/debsig/1.0/policy.dtd">
+      <Policy xmlns="https://www.debian.org/debsig/1.0/">
+      <Origin Name="Slack" id="262281B2DDE0F7A1" Description="Slack"/>
+      <Selection>
+      <Required Type="origin" File="debsig.gpg" id="262281B2DDE0F7A1"/>
+      </Selection>
+      <Verification>
+      <Required Type="origin" File="debsig.gpg" id="262281B2DDE0F7A1"/>
+      </Verification>
+      </Policy>
+
+install-zoom:
+  download_url_prefix: https://zoom.us/client/5.14.2.2046
+  package: zoom_amd64.deb
+  verification:
+    mode: dpkg-sig-legacy
+    public_key_url: https://zoom.us/linux/download/pubkey?version=5-12-6
+    public_key_filename: zoom-signing-key.pub
+    gpg_sig_file_name: '_gpgbuilder'
+    hash_algo: SHA1SUM
