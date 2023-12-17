@@ -128,9 +128,9 @@ install-virtualbox:
   repo_file_name: virtuallbox.list
   key_url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
   key_file_name: oracle_vbox_2016.gpg
-  package: virtualbox-6.1
-  version: 6.1.44
-  revision: 156814
+  package: virtualbox-7.0
+  version: 7.0.12
+  revision: 159484
   extension_pack_url_template: https://download.virtualbox.org/virtualbox/${version_short}/Oracle_VM_VirtualBox_Extension_Pack-${version_full}.vbox-extpack
   extension_pack_shasums_url_template: https://download.virtualbox.org/virtualbox/${version_short}/SHA256SUMS
 
